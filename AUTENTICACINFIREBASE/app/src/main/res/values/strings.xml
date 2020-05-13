@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AUTENTICACIÓN FIREBASE</string>
+    <string name="enter_email">E-mail</string>
+    <string name="enter_password">Contraseña</string>
+    <string name="registrar">Registrar</string>
+    <string name="LogIn">Ingresar</string>
+    <string name="LogOut">Cerrar sesión</string>
+    <string name="LogG">Inicia con Google</string>
+</resources>
