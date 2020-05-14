@@ -1,6 +1,7 @@
 package com.example.autenticacinfirebase;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -36,7 +37,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.OnConnectionFailedListener {
 
     private EditText TextEmail;
     private EditText TextPassword;
@@ -44,22 +45,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ProgressDialog progressDialog;
     private FirebaseAuth mAuth;
     private SignInButton signInButton;
+    private GoogleApiClient googleApiClient;
+    private int SIGN_IN_CODE=777;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        GoogleSignInOptions gso= new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        googleApiClient= new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
 
         mAuth = FirebaseAuth.getInstance();
+
 
         TextEmail = (EditText) findViewById(R.id.Emailtxt);
         TextPassword = (EditText) findViewById(R.id.Passwordtxt);
         btnRegistrar = (Button) findViewById(R.id.BotonRegistrar);
         btnLogin = (Button) findViewById(R.id.Botonlogin);
         progressDialog = new ProgressDialog(this);
+        signInButton=(SignInButton)findViewById(R.id.GoogleBoton);
+
+
         btnRegistrar.setOnClickListener(this);
         btnLogin.setOnClickListener(this);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+                startActivityForResult(intent, SIGN_IN_CODE);
+            }
+        });
+
 
 
 
@@ -160,6 +183,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         //Invocamos al método:
 
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode==SIGN_IN_CODE){
+            GoogleSignInResult result=Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+        }
+    }
+
+    private void handleSignInResult(GoogleSignInResult result) {
+        if(result.isSuccess()){
+            goMainScreen();
+        }else{
+            Toast.makeText(MainActivity.this, "Fails ", Toast.LENGTH_LONG).show();
+
+        }
+    }
+
+    private void goMainScreen() {
+        Intent intent=new Intent(this, Welcome.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK| Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }
 

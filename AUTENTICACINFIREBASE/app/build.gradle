@@ -23,7 +23,6 @@ android {
     }
 
 }
-apply plugin: 'com.google.gms.google-services'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -39,5 +38,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.1.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
     implementation 'org.jetbrains:annotations-java5:15.0'
-
 }
+apply plugin: 'com.google.gms.google-services'

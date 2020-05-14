@@ -6,4 +6,5 @@
     <string name="LogIn">Ingresar</string>
     <string name="LogOut">Cerrar sesión</string>
     <string name="LogG">Inicia con Google</string>
+    <string name="Remove">Remove</string>
 </resources>

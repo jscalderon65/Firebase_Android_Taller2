@@ -9,8 +9,8 @@
 
     <TextView
         android:id="@+id/ShowU"
-        android:layout_width="243dp"
-        android:layout_height="117dp"
+        android:layout_width="244dp"
+        android:layout_height="202dp"
         android:background="#06FFFFFF"
         android:clickable="false"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
@@ -26,7 +26,6 @@
         android:layout_width="143dp"
         android:layout_height="54dp"
         android:text="@string/LogOut"
-        android:theme="@style/CardView.Dark"
         android:textColorHint="@color/common_google_signin_btn_text_dark_default"
         android:typeface="sans"
         android:verticalScrollbarPosition="left"

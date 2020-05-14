@@ -24,7 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.518" />
+        app:layout_constraintVertical_bias="0.684" />
 
     <EditText
         android:id="@+id/Passwordtxt"
@@ -48,7 +48,6 @@
         android:layout_width="143dp"
         android:layout_height="54dp"
         android:text="@string/registrar"
-        android:theme="@style/CardView.Dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -61,13 +60,21 @@
         android:layout_width="143dp"
         android:layout_height="54dp"
         android:text="@string/LogIn"
-        android:theme="@style/CardView.Dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/BotonRegistrar"
-        app:layout_constraintVertical_bias="0.134" />
+        app:layout_constraintVertical_bias="0.07" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/GoogleBoton"
+        android:layout_width="143dp"
+        android:layout_height="54dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Botonlogin"
+        app:layout_constraintVertical_bias="0.118" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
