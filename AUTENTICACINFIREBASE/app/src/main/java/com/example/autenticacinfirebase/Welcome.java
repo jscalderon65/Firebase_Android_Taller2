@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -22,6 +24,7 @@ import com.google.android.gms.common.api.ResolvingResultCallbacks;
 import com.google.android.gms.common.api.ResultCallbacks;
 import com.google.android.gms.common.api.Status;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Welcome extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.OnConnectionFailedListener  {
     public static final String Usuario = "names";
@@ -37,8 +40,9 @@ public class Welcome extends AppCompatActivity implements View.OnClickListener,G
 
         txtUser = (TextView) findViewById(R.id.ShowU);
         String usuario = getIntent().getStringExtra("names");
-        txtUser.setText("Bienvenido " + usuario + "!");
 
+
+       // txtUser.setText("Bienvenido " + usuario + "!");
         btnSalir=(Button) findViewById(R.id.Salirbtn);
         btnSalir.setOnClickListener(this);
 
@@ -51,13 +55,30 @@ public class Welcome extends AppCompatActivity implements View.OnClickListener,G
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
         //FirebaseAuth.getInstance().signOut();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+            String uid = user.getUid();
+            Uri photoUrl = user.getPhotoUrl();
+            if(name==null){
+                txtUser.setText( "Bienvenido "+usuario + "!");
+            }else{
+                txtUser.setText( "Bienvenido "+name + "!");
+            }
+
+
+        }
+
     }
 
     public void onClick(View view) {
         Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(new ResultCallbacks<Status>() {
             @Override
+
             public void onSuccess(@NonNull Status status) {
                 if(status.isSuccess()){
+                    LoginManager.getInstance().logOut();
                     Intent intencion = new Intent(getApplication(), MainActivity.class);
                     startActivity(intencion);
                     Toast.makeText(getApplicationContext(), "Se ha cerrado sesión", Toast.LENGTH_SHORT).show();
